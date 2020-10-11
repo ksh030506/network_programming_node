@@ -18,7 +18,7 @@ clientSocket.connect({ host: "127.0.0.1", port: 3000 }, function () {
 // read reply form clientSocket
 clientSocket.on("data", (chunk) => {
   console.log(`receive data: ${chunk.toString()}`);
-  clientSocket.emit("end", (err) => console.log(err.toString()));
+  //clientSocket.emit("end", (err) => console.log(err.toString()));
 });
 
 clientSocket.on("error", (err) => console.log(err.toString()));
