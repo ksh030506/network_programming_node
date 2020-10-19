@@ -1,4 +1,5 @@
 var http = require('http');
+var fs = require('fs');
 
 //#region 1. http 서버 구동
 
@@ -53,24 +54,41 @@ var http = require('http');
 
 //#region 
 
-var server = http.createServer(function(req, res){ 
-    res.end(`<!DOCTYPE html>
-    <html>
-      <head>
-        <title>제목</title>
-        <meta charset="utf-8" />
-      </head>
-      <body>
-        <h1>Hello</h1>
-        <div>
-          <p>Welcome to HTML world! 저와 함께 html을 배워봅시다.</p>
-          <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRfxSBeI1_dVUmNt6DjCb0LOmEB-W_aZkmLQg&usqp=CAU"
-          />
-        </div>
-      </body>
-    </html>
-    `);
+// var server = http.createServer(function(req, res){
+//     fs.readFile('./test.html', (err, data) => {
+//         if(err){
+//             console.log(err);
+//             return;
+//         }
+//         else {
+//             res.end(data);
+//         }
+//     });
+// }).listen(8080, ()=> console.log("8080 포트로 실행함"));
+
+//#endregion
+
+//#region 
+
+var server = http.createServer(function(req, res){
+    console.log('req.url', req.url);
+    if(req.url == '/') {
+        fs.readFile('./test.html', (err, data) => {
+            if(err){
+                console.log(err);
+                return;
+            }
+            else {
+                res.end(data);
+            }
+        });
+    } else if(req.url == '/second') {
+        res.write('<h1>Second Page</h1>');
+        res.end(`<h1><a href='/thrid'>third Page</a></h1>`);
+    } else if(req.url == '/thrid') {
+        res.end('<h1>thrid Page</h1>');
+    }
 }).listen(8080, ()=> console.log("8080 포트로 실행함"));
+
 
 //#endregion
