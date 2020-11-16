@@ -20,7 +20,8 @@ var server = http.createServer(function(req, res){
     } else {
         if(req.url === '/'){
             fs.readFile('./index.html', (err, data) => {
-                res.end(data);
+                res.write(data);
+                res.end(`<a href='/'>Home</a>`);
             });
         }
     }
